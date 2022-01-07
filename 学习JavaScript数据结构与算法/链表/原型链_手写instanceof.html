@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        面试题一
+        instanceof 的原理，并用代码实现。
+
+        分析：
+        - 知识点：如果 A 沿着原型链能找到 B.prototype，那么 A instanceof B 为true。
+        - 解法：遍历 A 的原型链，如果找到 B.prototype，返回 true，否则返回 false
+     -->
+</head>
+<body>
+    <script>
+        const instanceOf = (A, B) => {
+            let p = A;
+            while (p) {
+                if (p === B.prototype) {
+                    return true;
+                }
+                p = p.__proto__;
+            }
+            return false;
+        }
+
+        console.log(instanceOf(1, Number)); // true
+        console.log(instanceOf([], Array)); // true
+        console.log(instanceOf([], Object)); // true
+    </script>
+</body>
+</html>

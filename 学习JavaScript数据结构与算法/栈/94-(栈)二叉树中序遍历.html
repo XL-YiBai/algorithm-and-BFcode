@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var inorderTraversal = function(root) {
+            const stack = [];
+            const res = [];
+            let n = root;
+            while (stack.length || n) {
+                while (n) { // 首先将根节点和左子树全部入栈
+                    stack.push(n);
+                    n = n.left;
+                } 
+                // 当左子树都已经入栈，开始出栈读入数字，并且将右子树入栈。
+                n = stack.pop();
+                res.push(n.val);
+                n = n.right;
+            }
+            return res
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        思路：
+        · 两个人在圆形操场上的起点起跑，速度快的人一定会超过速度慢的人一圈。
+        · 用一快一慢两个指针遍历链表，如果指针能够相逢，那么链表就有圈
+        步骤：
+        - 用一快一慢两个指针遍历链表，如果指针能够相逢，就返回true。
+        - 遍历结束后，还没有相逢就返回false
+
+        时间复杂度O(n) 空间复杂度O(1)
+     -->
+</head>
+<body>
+    <script>
+        var hasCycle = function(head) {
+            let p1 = head; // 慢指针
+            let p2 = head; // 快指针
+            while (p1 && p2 && p2.next) {
+                p1 = p1.next;
+                p2 = p2.next.next;
+                if (p1 === p2) { // 如果两个指针重逢
+                    return true;
+                }
+            }
+            // 遍历结束后
+            return false;
+        };
+    </script>
+</body>
+</html>

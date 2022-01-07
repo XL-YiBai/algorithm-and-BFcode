@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 时间复杂度 O(n) n为两个链表长度大一点的那个，
+         空间复杂度 O(n) n也是两个链表长度的较大者 -->
+</head>
+<body>
+    
+    <script>
+        // 自己的代码   由于原思路一直提交不过，这个代码仍然借鉴了老师的思路
+        // var addTwoNumbers = function(l1, l2) {
+        //     const l3 = new ListNode(0, null); // 先创建一个空节点赋给l3
+        //     // 三个链表的指针，用于遍历
+        //     let p1 = l1;
+        //     let p2 = l2;
+        //     let p3 = l3;
+        //     let k = 0; // 用于判断是否进位
+
+        //     while (p1 || p2) {
+        //         const v1 = p1 ? p1.val : 0; // 取p1的值
+        //         const v2 = p2 ? p2.val : 0; // 取p2的值
+        //         let sum = v1 + v2 + k; // 算出两个节点加上进位的值
+                
+        //         if (sum >= 10) {
+        //             let temp = new ListNode(sum-10, null);
+        //             p3.next = temp;
+        //             p3 = p3.next;
+        //             k = 1;
+        //         } else {
+        //             let temp = new ListNode(sum, null);
+        //             p3.next = temp;
+        //             p3=p3.next;
+        //             k = 0;
+        //         }
+        //         p1 = p1 ? p1.next : null;
+        //         p2 = p2 ? p2.next : null;
+        //     }
+        //     // 如果最后进位还是1，说明遍历完两个链表之后，总位数会多1，要补一个1在最后。
+        //     if (k==1) {
+        //         let temp = new ListNode(1, null);
+        //         p3.next = temp;
+        //     }
+        //     return l3.next; // 由于第一个节点是最开始创建的空节点是多余的，所以返回除第一个的后面的节点
+        // }; 
+
+
+        // 老师的代码
+        var addTwoNumbers = function(l1, l2) {
+            const l3 = new ListNode(0);
+            let p1 = l1;
+            let p2 = l2;
+            let p3 = l3;
+            let carry = 0;
+            while (p1 || p2) {
+                const v1 = p1 ? p1.val : 0;
+                const v2 = p2 ? p2.val : 0;
+                const val = v1 + v2 + carry;
+                carry = Math.floor(val / 10);
+                p3.next = new ListNode(val % 10);
+                if (p1) p1=p1.next;
+                if (p2) p2=p2.next;
+                p3 = p3.next;
+            }
+            if (carry) {
+                p3.next = new ListNode(carry);
+            }
+            return l3.next;
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 自己思路
+        var mergeTwoLists = function(l1, l2) {
+            let arr = [];
+            let p1 = l1;
+            let p2 = l2;
+            
+            //将两个链表的值都读入数组
+            while (p1) {
+                arr.push(p1.val);
+                p1 = p1.next;
+            }
+            while (p2) {
+                arr.push(p2.val);
+                p2 = p2.next;
+            }
+            // 对数组排序
+            arr.sort((a,b) => {
+                return a-b;
+            });
+
+            if (arr.length == 0) {return null;} // 如果输入的是两个空链表，返回null
+            
+            //将排序后的值插入新链表l3中
+            let l3 = new ListNode(arr[0]);
+            let p3 = l3;
+            for (let i=1; i<arr.length; i++) {
+                p3.next = new ListNode(arr[i]);
+                p3 = p3.next;
+            }
+            return l3;
+        };
+    </script>
+</body>
+</html>

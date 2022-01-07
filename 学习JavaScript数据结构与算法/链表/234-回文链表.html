@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 自己思路
+        var isPalindrome = function(head) {
+            let arr = [];
+            let p = head;
+            // 读入数据到数组
+            while (p) {
+                arr.push(p.val);
+                p=p.next;
+            }
+            // 只有一个节点的链表一定回文
+            if (arr.length == 1) {return true}
+            // 从前到后和从后到前依次判断是否相等
+            for (var i=0, j=arr.length-1; i<=j; i++,j--) {
+                if (arr[i] == arr[j]) {
+                    continue;
+                } else {
+                    return false;
+                }
+            }
+            return true;
+        };
+
+        // 学长思路  将数据读入数组，然后将数组转为字符串，与反转数组后转为字符串比较是否相等
+        var isPalindrome = function(head) {
+            let p = head
+            let arr = []
+            while(p){
+                arr.push(p.val)
+                p = p.next
+            }
+            if(arr.toString() === arr.reverse().toString()){
+                return true
+            } else {
+                return false
+            }
+        };
+    </script>
+</body>
+</html>

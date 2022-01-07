@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 时间复杂度O(n)，空间复杂度O(1) -->
+</head>
+<body>
+    <script>
+        // 自己代码
+        // var deleteDuplicates = function(head) {
+        //     let p1 = head;
+        //     while (p1) {
+        //         if (p1.next && (p1.val == p1.next.val)) {
+        //             p1.next = p1.next.next;
+        //         } else {
+        //             p1 = p1.next;
+        //         }
+        //     }
+        //     return head;
+        // };
+
+        // 老师代码
+        // 因为链表是有序的，所以重复元素一定相邻
+        // 遍历链表，如果发现当前元素和下个元素值相同，就删除下个元素
+        var deleteDuplicates = function(head) {
+            let p = head;
+            while(p && p.next) {
+                if (p.val === p.next.val) {
+                    p.next = p.next.next;
+                } else { // 因为可能有连续三个元素都相同，还需要继续判断，所以指针后移放到else里面
+                    p = p.next;
+                }
+                
+            }
+            return head;
+        };
+    </script>
+</body>
+</html>

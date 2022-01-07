@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        时间复杂度和空间复杂度都是 On
+     -->
+</head>
+<body>
+    <script>
+        var preorderTraversal = function(root) {
+            const res = []; // 存放输出的序列
+            const stack = []; // 存放节点的栈
+            if (root) { stack.push(root)};
+            
+            while(stack.length) { // 如果栈中还有节点，就循环
+                const n = stack.pop(); // 把栈顶节点取出
+                res.push(n.val); // 将取出的节点值存入res数组
+                // 因为先序遍历根之后，要先遍历左子树再右子树，根据栈的特性要先右子树入栈再左子树入栈
+                if (n.right) stack.push(n.right);
+                if (n.left) stack.push(n.left);
+            }
+
+            return res;
+        };
+    </script>
+</body>
+</html>

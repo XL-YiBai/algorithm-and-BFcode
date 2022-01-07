@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 时间复杂度和空间复杂度都是 O(1) -->
+</head>
+<body>
+    <script>
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+        /**
+         * @param {ListNode} node
+         * @return {void} Do not return anything, modify node in-place instead.
+         */
+        var deleteNode = function(node) {
+            // 由于无法访问到上个节点，我们不能按平常的方法进行删除
+            // 此时可以将要删除的节点的下个节点值转移到要删除的节点上，然后删除下个节点,就能达到目的。
+            
+            node.val = node.next.val; 
+            node.next = node.next.next;
+        };
+    </script>
+</body>
+</html>
