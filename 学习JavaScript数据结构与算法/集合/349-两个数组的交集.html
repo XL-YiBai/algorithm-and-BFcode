@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 自己代码
+        // var intersection = function(nums1, nums2) {
+        //     let set1 = new Set(nums1);
+        //     let set2 = new Set(nums2);
+        //     let nums3 = [...new Set([...set1].filter(item => set2.has(item)))];
+        //     return nums3;
+        // };
+
+        // 老师代码   时间复杂度O(m·n) filter和includes两个循环      空间复杂度O(m) m为去重后数组长度
+        var intersection = function(nums1, nums2) {
+            return [...new Set(nums1)].filter(n => nums2.includes(n));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        深度优先遍历算法口诀：
+        - 访问根节点。
+        - 对根节点的children挨个进行深度优先遍历。
+     -->
+</head>
+<body>
+    <script>
+        const tree = {
+            val: 'a',
+            children: [
+                {
+                    val: 'b',
+                    children: [
+                        {
+                            val: 'd',
+                            children: [],
+                        },
+                        {
+                            val: 'e',
+                            children: [],
+                        }
+                    ],
+                },
+                {
+                    val: 'c',
+                    children: [
+                    {
+                        val: 'f',
+                        children: [],
+                    },
+                    {
+                        val: 'g',
+                        children: [],
+                    }
+                    ],
+                }
+            ],
+        };
+
+        const dfs = (root) => { // 先访问根节点，再递归访问左右子树，
+            console.log(root.val);
+            root.children.forEach(dfs); // 相当于 dfs(root.left) 和 dfs(root.right);
+        };
+
+        dfs(tree); // a b d e c f g
+    </script>
+</body>
+</html>

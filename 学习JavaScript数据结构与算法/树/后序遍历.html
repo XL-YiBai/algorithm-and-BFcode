@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const bt = {
+            val: 1,
+            left: {
+                val: 2,
+                left: {
+                    val: 4,
+                    left: null,
+                    right: null,
+                },
+                right: {
+                    val: 5,
+                    left: null,
+                    right: null,
+                }
+            },
+            right: {
+                val: 3,
+                left: {
+                    val: 6,
+                    left: null,
+                    right: null,
+                },
+                right: {
+                    val: 7,
+                    left: null,
+                    right: null,
+                }
+            }
+        };
+
+        // const postorder = (root) => {
+        //     if (!root) { return; }
+        //     postorder(root.left);
+        //     postorder(root.right);
+        //     console.log(root.val);
+        // }
+        // postorder(bt); // 4 5 2 6 7 3 1
+
+        // 非递归，后序遍历就是左右根，如果逆向看就是根右左，就是类似先序遍历的逻辑，我们把根右左序列压栈，然后再逆序输出就是左右根后序遍历序列了
+        const postorder = (root) => {
+            if (!root) { return; }
+            const outputStack = [];
+            const stack = [root];
+            while (stack.length) {
+                const n = stack.pop();
+                outputStack.push(n)
+                if (n.left) stack.push(n.left);
+                if (n.right) stack.push(n.right); 
+            }
+            while(outputStack.length) {
+                const n = outputStack.pop();
+                console.log(n.val);
+            }
+        }
+        postorder(bt);
+    </script>
+</body>
+</html>

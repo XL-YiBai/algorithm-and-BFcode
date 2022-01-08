@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路:
+        - 先找出所有的包含T的子串.
+        - 找出长度最小的那个子串,返回即可
+
+        解题步骤:
+        - 用双指针维护一个滑动窗口,枚举出所有的子串
+        - 移动右指针,找到包含T的子串,移动左指针,尽量减少包含T的子串的长度.
+
+        时间复杂度:O(m+n), m是t的长度,n是s的长度
+        空间复杂度:O(m), m是t里面不同字符的个数
+     -->
+</head>
+<body>
+    <script>
+        var minWindow = function(s, t) {
+            let l = 0; // 左指针
+            let r = 0; // 右指针
+            const need = new Map(); // need存取需要的字符以及需要的个数
+            // 存入need字典
+            for (let c of t) {
+                need.set(c, need.has(c) ? need.get(c) + 1 : 1);
+            }
+            let needType = need.size; // 需要字符的种类个数
+            let res = ''; // 结果字符串
+            while (r < s.length) { // 右指针向右移动
+                const c = s[r];
+                if (need.has(c)) { // need字典中存在当前右指针字符
+                    //老师的这种方法很好,因为有可能读入的字符数多于需要的个数,此时需要的个数会变成负数
+                    need.set(c, need.get(c) - 1); // 就把该个数减一,,
+                    if (need.get(c) === 0) needType -= 1; // 如果该字符需要个数已经为0,就让需要的种类减一
+                }
+                while (needType === 0) { // 当需要的字符种类为0,说明子串中需要的字符都有了,开始移动左指针
+                    const newRes = s.substring(l, r+1); // 移动之前,先把这个满足条件的字符串取出来,substring方法左开右闭,r要加1
+                    if (!res || newRes.length < res.length) res = newRes; // 如果结果字符串还为空,就直接赋值,如果不为空,就判断结果字符串是否更长,如果更长就替换掉
+                    const c2 = s[l]; // 左指针当前的字符
+                    if(need.has(c2)) { // 如果左指针的字符正好是需要字符中的,我们需要把need字典中该字符的需要数量加1
+                        need.set(c2, need.get(c2) + 1);
+                        // 因为字典中有可能存在负数,加一之后可能还是不需要该字符
+                        if (need.get(c2) === 1) needType += 1; // 判断加1之后是否值为1,如果为1,说明从0变成1,即不需要变成需要,所以需要的种类数加1
+                    }
+                    l++;
+                }
+                r++;
+            }
+            return res;
+        };
+    </script>
+</body>
+</html>
+<!-- 
+    自己失败的尝试,,在一个很长字符串的测试用例中,超出时间限制.
+    var minWindow = function(s, t) {
+        const map = new Map();
+        let res = s;
+        let flag = false;
+        for (let i=0; i<t.length; i++) {
+            if (map.has(t[i])) {
+                let k = map.get(t[i])
+                map.set(t[i], k+1);
+            } else {
+                map.set(t[i], 1);
+            }
+        }
+        for (let l=0; l<s.length; l++) {
+            let m = new Map(map);
+            let str = ""
+            for (let r = l; r<s.length; r++) {
+                if (m.size>0) {
+                    str += s[r];
+                    if (m.has(s[r])) {
+                        let k = m.get(s[r]);
+                        if (k > 1) {
+                            m.set(s[r], k-1);
+                        } else {
+                            m.delete(s[r]);
+                        }
+                    }
+                } else {
+                    break;
+                }
+            }
+            if (res.length >= str.length && m.size==0) {
+                flag = true;
+                res = str;
+            }
+        }
+        if(flag) {
+            return res;
+        } else {
+            return "";
+        }
+    };
+
+    老师的代码,无注释版
+    var minWindow = function(s, t) {
+        let l = 0;
+        let r = 0;
+        const need = new Map();
+        for (let c of t) {
+            need.set(c, need.has(c) ? need.get(c) + 1 : 1);
+        }
+        let needType = need.size;
+        let res = '';
+        while (r < s.length) {
+            const c = s[r];
+            if (need.has(c)) {
+                need.set(c, need.get(c) - 1);
+                if (need.get(c) === 0) needType -= 1;
+            }
+            while (needType === 0) {
+                const newRes = s.substring(l, r+1);
+                if (!res || newRes.length < res.length) res = newRes;
+                const c2 = s[l]; // 左指针当前的字符
+                if(need.has(c2)) {
+                    need.set(c2, need.get(c2) + 1);
+                    if (need.get(c2) === 1) needType += 1;
+                }
+                l++;
+            }
+            r++;
+        }
+        return res;
+    };
+ -->

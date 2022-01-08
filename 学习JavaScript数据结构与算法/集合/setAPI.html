@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let mySet = new Set();
+
+        // 1. add用于添加元素
+        mySet.add(1); 
+        mySet.add(5);
+        mySet.add(5);
+        // 还可以添加字符串和对象
+        mySet.add('some text');
+        // 对象是复杂数据类型，两个对象地址不一样，所以都可以添加进集合
+        let o = { a: 1, b: 2};
+        mySet.add(o);
+        mySet.add({ a: 1, b: 2});
+        console.log(mySet); // (1, 5, "some text", Object, Object);
+
+
+        // 2. has方法用于判断集合中是否存在元素
+        console.log(mySet.has(1)); // true
+        console.log(mySet.has(3)); // false
+        console.log(mySet.has("some text")); // true
+        console.log(mySet.has(o)); // true
+
+        // 3. delete方法用于删除元素
+        mySet.delete(5);
+        console.log(mySet); // (1, "some text", Object, Object);
+
+        // 4. size属性用于获取集合的大小，元素个数
+        console.log(mySet.size); // 4  因为上面删除了一个元素
+
+        console.log("-----------------------------");
+
+        // 5. 迭代一个Set集合
+        // for (let item of mySet) console.log(item);  // 依次打印元素
+        // 使用keys()方法和values()方法的迭代结果均一样
+        // for (let item of mySet.keys()) console.log(item);
+        // for (let item of mySet.values()) console.log(item);
+        for (let [key, value] of mySet.entries()) console.log(key, value); // 打印的key和value完全一样，说明Set的键和值一样
+
+        console.log("-----------------------------");
+        // 6. Set和Array互转
+        console.log([...mySet]); // Set转Array
+        console.log(Array.from(mySet)); // Set转Array
+        mySet2 = new Set([1,2,3,4])
+        console.log(mySet2); // Array转Set
+        
+        // 7. 求交集和差集
+        // Set没有提供求交集的方法,需要转换成Array,用Array的方法来求
+        const intersection = new Set([...mySet].filter(x => mySet2.has(x))); // 交集
+        console.log(intersection); // (1)
+        const difference = new Set([...mySet].filter(x => !mySet2.has(x))); // 差集
+        console.log(difference); // ("some text", Object, Object)
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路:
+        - 把 nums 想象成相亲者
+        - 把 target 想象成匹配条件
+        - 用字典建立一个婚姻介绍所,存储相亲者的数字和下标
+
+        解题步骤:
+        - 新建一个字典作为婚姻介绍所
+        - nums里的值,逐个来介绍所找对象,没有合适的就先登记着,有合适的就牵手成功
+
+        时间复杂度O(n)  空间复杂度O(n)
+     -->
+</head>
+<body>
+    <script>
+        var twoSum = function(nums, target) {
+            const map = new Map(); 
+            for (let i = 0; i<nums.length-1; i++) {
+                const n = nums[i]; 
+                const n2= target-n;
+                if (map.has(n2)) { // 如果map中有与当前值相加为target的键,
+                    return [map.get(n2), i];
+                } else { // 如果没有就把当前值存入map
+                    map.set(n, i);
+                }
+            }
+        };
+    </script>
+</body>
+</html>

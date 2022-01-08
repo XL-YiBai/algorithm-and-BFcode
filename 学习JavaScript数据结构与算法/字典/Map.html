@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        字典(Map 映射的意思)
+        - 与集合类似,字典也是一种存储唯一值的数据结构,但它是以键值对的形式来存储
+        - ES6 中有字典,名为 Map
+        - 字典的常用操作:键值对的增删改查
+
+        set() get() delete()时间复杂度都为O(1)
+     -->
+</head>
+<body>
+    <script>
+        const m = new Map();
+
+        // 增  使用set方法往字典中添加键值对
+        m.set('a', 'aa'); //键为'a', 值为'aa'
+        m.set('b', 'bb');
+        console.log(m); // {'a' => 'aa', 'b' => 'bb' }
+
+        // 查
+        console.log(m.get('a')); // 'a'键对应的值为 'aa',输出'aa'
+        console.log(m.get('b')); // 'bb'
+
+        // 删  delete 删除某个键     clear()删除所有键
+        m.delete('b');
+        console.log(m); // {'a' => 'aa'};
+        // m.clear();
+        // console.log(m); // {size: 0}  没有任何键值对
+
+        // 改
+        m.set('a', 'aaa');  // 直接再次set方法覆盖原来的键
+        console.log(m.get('a')); // 'aaa'
+    </script>
+</body>
+</html>

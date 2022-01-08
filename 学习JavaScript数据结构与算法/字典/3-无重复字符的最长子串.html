@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路:
+        - 先找出所有的不包含重复字符的子串
+        - 找出长度最大的那个子串,返回其长度即可
+
+        解题步骤:
+        - 用双指针维护一个滑动窗口,用来剪切子串
+        - 不断移动右指针,遇到重复字符,就把左指针移动到重复字符的下一位
+        - 过程中,记录所有窗口的长度,并返回最大值
+     -->
+</head>
+<body>
+    <script>
+        // 自己思路 时间和空间都很差,只击败了14%的用户
+        var lengthOfLongestSubstring = function(s) {
+            if (s === "") {return 0} // 输入串为空则长度0
+            let k = 1; // 记录最长子串长度
+            const map = new Map();
+            for(let i=0; i<s.length; i++) {
+                map.clear(); // 每次都清空map再存入新的子串
+                map.set(s[i], true); // 首先把第一个字符放入map
+                let l = 1;
+                for (let j=i+1; j<s.length; j++) { // 遍历后面的字符
+                    if (map.get(s[j])){ // 如果字典中已经存在,就更新子串长度k
+                        k = (l>k ? l : k);
+                        break;
+                    } else { // 如果不存在,就把该字符存入字典,并更新最子串长度k
+                        map.set(s[j], true);
+                        l++;
+                        k = (l>k ? l : k);
+                    }
+                }
+            }
+            return k;
+        };
+
+        // 老师代码 时间和空间都击败了80+%用户   时间复杂度O(n) 空间复杂度O(m) m是字符串中不重复字符的个数
+        var lengthOfLongestSubstring = function(s) {
+            let l = 0; // 定义左指针
+            let res = 0; // 保存子串长度
+            const map = new Map();
+            for (let r = 0; r<s.length; r++) { // r为右指针,不断向右移动
+                if (map.has(s[r]) && map.get(s[r]) >= l) { // 如果map中已经有这个字符,并且这个字符的下表在左右指针包含范围内
+                    l = map.get(s[r]) + 1; // 将左指针移到第一个重复字符的下一位
+                }
+                res = Math.max(res, r - l + 1); // 更新子串长度
+                map.set(s[r], r); // 如果没有重复,就把字符和下标添加进数组;或者如果有重复,就更新一下字符最近的下标
+                // 比如ababcad, 字典中键为'a'的值依次变为0、2、5
+            }
+            return res;
+        };
+    </script>
+</body>
+</html>

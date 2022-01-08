@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路:
+        - 求 nums1 和 nums2 都有的值
+        - 用字典简历一个映射关系,记录nums1里都有的值
+        - 遍历nums2,找出nums2里也有的值
+
+        解题步骤:
+        - 新建一个字典,遍历nums1,填充字典
+        - 遍历nums2,遇到字典里的值就选出,并从字典中删除(如果不删除,就会导致后续遍历到相同数字时,结果值不唯一,删除防止重复)
+     -->
+     <!-- 时间复杂度O(m+n),m和n为nums1和nums2的长度, 空间复杂度O(m), m是nums1的长度 -->
+</head>
+<body>
+    <script>
+        var intersection = function(nums1, nums2) {
+            const map = new Map();
+            nums1.forEach(n => { // 把nums1的值存入字典,标识为true存在
+                map.set(n, true);
+            });
+            const res = [];
+            nums2.forEach(n => { // 遍历nums2
+                if (map.get(n)) { // 如果n在nums1中也存在
+                    res.push(n); // 存入结果中
+                    map.delete(n); // 删除字典中的键值
+                }
+            })
+            return res;
+        };
+    </script>
+</body>
+</html>

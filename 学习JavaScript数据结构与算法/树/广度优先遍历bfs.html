@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        广度优先遍历算法口诀：
+        - 新建一个队列，把根节点入队
+        - 把队头出队并访问
+        - 把队头的children挨个入队
+        - 重复第二、三步，直到队列为空
+     -->
+</head>
+<body>
+    <script>
+        const tree = {
+            val: 'a',
+            children: [
+                {
+                    val: 'b',
+                    children: [
+                        {
+                            val: 'd',
+                            children: [],
+                        },
+                        {
+                            val: 'e',
+                            children: [],
+                        }
+                    ],
+                },
+                {
+                    val: 'c',
+                    children: [
+                    {
+                        val: 'f',
+                        children: [],
+                    },
+                    {
+                        val: 'g',
+                        children: [],
+                    }
+                    ],
+                }
+            ],
+        };
+
+        // 用队列存储，先访问根节点，再把左右子树入队，然后再出队一个元素访问根节点，再左右子树入队..
+        const bfs = (root) => {
+            const q = [root]; 
+            while (q.length>0) {
+                const n = q.shift(); // 队头出队
+                console.log(n.val); // 访问节点
+                n.children.forEach(child => { // 讲该节点的子节点都入队
+                    q.push(child);
+                });
+            }
+        }
+
+        bfs(tree); // a b c d e f g
+    </script>
+</body>
+</html>

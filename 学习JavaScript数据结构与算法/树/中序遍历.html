@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        中序遍历算法口诀：
+        - 对根节点的左子树进行中序遍历
+        - 访问根节点
+        - 对根节点的右子树进行中序遍历
+     -->
+</head>
+<body>
+    <script>
+        const bt = {
+            val: 1,
+            left: {
+                val: 2,
+                left: {
+                    val: 4,
+                    left: null,
+                    right: null,
+                },
+                right: {
+                    val: 5,
+                    left: null,
+                    right: null,
+                }
+            },
+            right: {
+                val: 3,
+                left: {
+                    val: 6,
+                    left: null,
+                    right: null,
+                },
+                right: {
+                    val: 7,
+                    left: null,
+                    right: null,
+                }
+            }
+        };
+
+        // 递归
+        // const inorder = (root) => {
+        //     if (!root) { return; }
+        //     inorder(root.left);
+        //     console.log(root.val);
+        //     inorder(root.right);
+        // }
+        // inorder(bt); // 4 2 5 1 6 3 7
+
+        // 非递归
+        const inorder = (root) => {
+            if (!root) { return; }
+            const stack = [];
+            let p = root;
+            while (stack.length || p) { 
+                    while(p) { // 把根节点入栈之后，再把左子树以及左子树的左子树全部入栈，循环完根节点在栈底
+                    stack.push(p);
+                    p = p.left;
+                }
+                const n = stack.pop(); 
+                console.log(n.val); 
+                p = n.right;
+            }
+        }
+        inorder(bt);
+    </script>
+</body>
+</html>

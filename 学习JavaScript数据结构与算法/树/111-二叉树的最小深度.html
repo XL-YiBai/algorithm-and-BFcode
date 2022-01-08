@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 求最小深度，考虑使用广度优先遍历
+        - 在广度优先遍历中，遇到叶子节点，停止遍历，返回节点层级
+
+        解题步骤：
+        - 广度优先遍历整棵树，并记录每个节点的层级
+        - 遇到叶子节点，返回节点层级，停止遍历
+
+        时间复杂度O(n) 最坏需要遍历节点数量n
+        空间复杂度O(n) 最坏情况装满树的节点n
+     -->
+</head>
+<body>
+    <script>
+        // 自己思路：深度优先遍历，遍历所有节点，速度比较慢
+        // var minDepth = function(root) {
+        //     if (!root) {return 0};
+        //     let res = 100000;
+        //     const dfs = (n, l) => {
+        //         if (!n) {return;}
+        //         if (!n.left && !n.right) {
+        //             res = res>l ? l : res;
+        //         }
+        //         dfs(n.left, l+1);
+        //         dfs(n.right, l+1);
+        //     }
+        //     dfs(root, 1);
+        //     return res;
+        // };
+        const [a,b] = [1,2];
+        console.log(a,b);
+
+        // 老师代码
+        var minDepth = function(root) {
+            if (!root) {return null;}
+            let q = [[root, 1]]; // 队列中保存数组，这个数组中第一个值为节点，第二个值为层级，先传入根节点和层级为1
+            while (q.length) {
+                const [n, l] = q.shift(); // 使用数组解构赋值，将节点赋给n，层级赋给l
+                if (!n.left && !n.right) {return l}; // 首次遇到叶子节点即为最小层级，直接返回
+                // 将左右子树入队并层级加一
+                if (n.left) q.push([n.left, l+1]); 
+                if (n.right) q.push([n.right, l+1]);
+            }
+        };
+    </script>
+</body>
+</html>

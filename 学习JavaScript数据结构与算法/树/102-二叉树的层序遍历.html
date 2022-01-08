@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 层序遍历就是广度优先遍历
+        - 不过在遍历的时候要记录当前节点所处的层级，方便将其添加到不同的数组中
+
+        解题步骤
+        - 广度优先遍历二叉树
+        - 遍历过程中，记录每个节点的层级，并将其添加到不同的数组中
+     -->
+</head>
+<body>
+    <script>
+        // 自己思路 深度优先
+        var levelOrder = function(root) {
+            if (!root) {return []}
+            let map = new Map(); // 用map的键存层次，值为一个数组，保存该层次的所有节点的值
+
+            let dfs = (n, l) => { // 深度优先遍历，n为节点，l为层次
+                let v = n.val;
+                if (map.has(l)) { // 如果有以l为层数的键值
+                    let arr = map.get(l); // 取出l层数组
+                    arr.push(v); // 把当前节点值压入数组
+                    map.set(l, arr); // 更新map中l层的值
+                } else {//如果不存在l层的键值，则创建一个
+                    map.set(l, [v]) 
+                }
+                if (n.left) dfs(n.left, l+1);
+                if (n.right) dfs(n.right, l+1);
+            }
+            dfs(root, 1);
+            const arr = []; // 声明一个数组保存结果
+            map.forEach((value, key, m) => { // 遍历map，将map中的所有数组存入arr中
+                arr.push(value);
+            })
+            return arr;
+        };
+
+        // 老师思路 广度优先
+        var levelOrder = function(root) {
+            if (!root) {return []};
+            const q = [[root, 0]]; // 在队列中保存节点和层级作为数组，假定根节点是0层，为了和队列数组下标对应
+            const res = [];// 保存结果
+            while (q.length) { 
+                const [n,level] = q.shift(); // 出队元素，并解构赋值给节点n，和层级level
+                if (!res[level]) { // 如果在队列q中level层级(即下标)为空
+                    res.push([n.val]); // 就追加一个新数组
+                } else { // 有元素就在那个数组元素里面追加值
+                    res[level].push(n.val);
+                }
+                if (n.left) q.push([n.left, level+1]);
+                if (n.right) q.push([n.right, level+1]);
+            }
+            return res;
+        };
+    </script>
+</body>
+</html>

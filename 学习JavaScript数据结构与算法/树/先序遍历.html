@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const bt = {
+            val: 1,
+            left: {
+                val: 2,
+                left: {
+                    val: 4,
+                    left: null,
+                    right: null,
+                },
+                right: {
+                    val: 5,
+                    left: null,
+                    right: null,
+                }
+            },
+            right: {
+                val: 3,
+                left: {
+                    val: 6,
+                    left: null,
+                    right: null,
+                },
+                right: {
+                    val: 7,
+                    left: null,
+                    right: null,
+                }
+            }
+        };
+        
+        // 递归
+        // const preorder = (root) => {
+        //     if (!root) { return; }
+        //     console.log(root.val);
+        //     preorder(root.left);
+        //     preorder(root.right);
+        // }
+        // preorder(bt); // 1 2 4 5 3 6 7
+
+        // 非递归
+        const preorder = (root) => {
+            if (!root) { return; }
+            const stack = [root];
+            while (stack.length) {
+                const n = stack.pop();
+                console.log(n.val);
+                // 后进先出，要先访问左再右，就需要右先入栈再左入栈
+                if (n.right) stack.push(n.right); 
+                if (n.left) stack.push(n.left);
+            }
+        }
+        preorder(bt);
+    </script>
+</body>
+</html>
