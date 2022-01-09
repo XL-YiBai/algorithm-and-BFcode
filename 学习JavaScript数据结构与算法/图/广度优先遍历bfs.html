@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 以邻接表的形式存储
+        const graph = {
+            0: [1, 2],
+            1: [2],
+            2: [0, 3],
+            3: [3]
+        };
+
+        const visited = new Set();
+        visited.add(2);
+        const q = [2];
+        while (q.length) {
+            const n = q.shift();
+            console.log(n);
+            // 如果把visited.add(n)写在这行，就会有漏洞，有些元素已经入队，但是还没访问，此时可能重复入队
+            graph[n].forEach(c => {
+                if (!visited.has(c)) {
+                    q.push(c);
+                    visited.add(c); // 只要元素入队就当作已经访问过
+                }
+            })
+        }
+
+        // 输出2 0 3 1
+    </script>
+</body>
+</html>

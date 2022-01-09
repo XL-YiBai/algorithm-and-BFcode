@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 在深度优先遍历过程中，记录当前路径的节点值得和。
+        - 在叶子节点处，判断当前路径得节点值得和是否等于目标值
+
+        解题步骤：
+        - 深度优先遍历二叉树，在叶子节点处，判断当前路径得节点值的和是否等于目标值，是就返回true
+        - 遍历结束，如果没有匹配，就返回false
+
+        时间复杂度 O(n) n为节点数， 空间复杂度最坏O(n)，n是树的高度，只有一个分支，均匀生长则空间复杂度是O(logn)
+     -->
+</head>
+<body>
+    <script>
+        // 自己思路
+        var hasPathSum = function(root, targetSum) {
+            if (!root) {return false}
+            let sum = 0; // 当前走过节点的总和
+            let flag = false; // 用来保存判断结果
+            const dfs = (root) => {
+                sum += root.val; // 每遍历一个节点先把该节点值加进总和
+                if (sum == targetSum && !root.left && !root.right) {
+                    flag = true;
+                    return;
+                }
+                if (root.left) dfs(root.left);
+                if (root.right) dfs(root.right);
+                sum -= root.val; // 当这个节点左右节点都遍历完函数还没结束说明要回退到上一节点，就在总和中减去该节点的值
+            }
+            dfs(root);
+            return flag;
+        };
+
+        // 老师代码
+        var hasPathSum = function(root, targetSum) {
+            if (!root) return false;
+            let res = false;
+            const dfs = (n, s) => { // 深度遍历时，第一个参数n是节点，第二个参数是根节点到当前节点的值的和
+                if (!n.left && !n.right && s === targetSum) {
+                    res = true; // 叶子节点时，节点累加和已经到目标值就把res标为true
+                } 
+                if(n.left) dfs(n.left, s + n.left.val);
+                if(n.right) dfs(n.right, s + n.right.val);
+            }
+            dfs(root, root.val);
+            return res;
+        };
+    </script>
+</body>
+</html>

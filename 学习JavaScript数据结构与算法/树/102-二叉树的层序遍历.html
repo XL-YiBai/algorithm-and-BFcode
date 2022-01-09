@@ -42,7 +42,7 @@
             return arr;
         };
 
-        // 老师思路 广度优先
+        // 老师思路1  广度优先遍历同时记录每个节点层级
         var levelOrder = function(root) {
             if (!root) {return []};
             const q = [[root, 0]]; // 在队列中保存节点和层级作为数组，假定根节点是0层，为了和队列数组下标对应
@@ -58,6 +58,24 @@
                 if (n.right) q.push([n.right, level+1]);
             }
             return res;
+        };
+
+        // 老师思路2  时间复杂度O(n) n为节点数    空间复杂度O(n)
+        var levelOrder = function(root) {
+            if (!root) {return []};
+            const q = [root];
+            const res = [];
+            while (q.length) { // 第一次循环时只有头节点，即第一层节点，第二次循环时队列中都是第二层节点
+                let len = q.length;
+                res.push([]); // 向res推入一个空数组用于保存新一层的节点
+                while (len--) { // 把同一层节点依次出队，并把下一层节点入队，这里可以保证每次出队的节点都是同一层
+                    const n = q.shift();
+                    res[res.length - 1].push(n.val);
+                    if (n.left) q.push(n.left);
+                    if (n.right) q.push(n.right);
+                }
+            }
+            return res; 
         };
     </script>
 </body>

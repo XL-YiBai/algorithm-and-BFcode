@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 把矩阵想象成图
+        - 从海岸线逆流而上遍历图，所到之处就是可以流到某个大洋的坐标
+
+        解题步骤：
+        - 新建两个矩阵，分别记录能留到两个大洋的坐标，用true和false表示，初始化为false
+        - 从海岸线，多管齐下，同时深度优先遍历图，过程中填充上述矩阵
+        - 遍历两个矩阵，找出能流到两个大洋的坐标
+     -->
+</head>
+<body>
+    <script>
+        var pacificAtlantic = function(heights) {
+            if (!heights || !heights[0]) {return [];} // 如果矩阵不存在，或者不是二维矩阵
+            const m = heights.length;
+            const n = heights[0].length;
+            // 创建两个和所给二维数组大小一样的数组，每个值都设为false
+            const flow1 = Array.from({ length: m}, () => new Array(n).fill(false));
+            const flow2 = Array.from({ length: m}, () => new Array(n).fill(false));
+
+            const dfs = (r, c, flow) => {
+                flow[r][c] = true;
+                [[r-1, c], [r+1, c], [r, c-1], [r, c+1]].forEach(([nr, nc]) => {
+                    if (
+                        // 保证下一个节点在矩阵中
+                        nr >= 0 && nr < m &&
+                        nc >= 0 && nc < n &&
+                        // 防止死循环，保证没有访问过这个节点
+                        !flow[nr][nc] &&
+                        // 保证逆流而上 下一个节点比当前节点高
+                        heights[nr][nc] >= heights[r][c]
+                    ) {
+                        dfs(nr, nc, flow);
+                    }
+                });
+            };
+            
+            // 沿着海岸线逆流而上
+            for (let r = 0; r < m; r++) {
+                dfs(r, 0, flow1); // 第一列的格子(太平洋)
+                dfs(r, n-1, flow2); // 最后一列的格子(大西洋)
+            }
+            for (let c = 0; c < n; c++) {
+                dfs(0, c, flow1); // 第一行(太平洋)
+                dfs(m-1, c, flow2); // 最后一行(大西洋)
+            }
+            // 收集能流到两个大洋里的坐标
+            const res = [];
+            for (let r = 0; r < m; r++) {
+                for (let c = 0; c < n; c++) {
+                    if (flow1[r][c] && flow2[r][c]) {
+                        res.push([r, c]);
+                    }
+                }
+            }
+            return res
+        };
+    </script>
+</body>
+</html>
