@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 看到“第K个最大元素”
+        - 考虑选择使用最小堆
+
+        解题步骤：
+        - 构建一个最小堆，并依次把数组的值插入堆中
+        - 当堆的容量超过K，就删除堆顶
+        - 插入结束后，堆顶就是第K个最大元素
+     -->
+</head>
+<body>
+    <script>
+        // 声明最小堆类
+        class MinHeap {
+            constructor() {
+                this.heap = [];
+            }
+            // 交换两个节点
+            swap(i1, i2) {
+                const temp = this.heap[i1];
+                this.heap[i1] = this.heap[i2];
+                this.heap[i2] = temp;
+            }
+            // 获取父节点
+            getParentIndex(i) {
+                return (i - 1) >> 1; // 相当于 Math.floor((i-1) / 2);
+            }
+            // 获取左子节点
+            getLeftIndex(i) {
+                return i * 2 + 1;
+            }
+            getRightIndex(i) {
+                return i * 2 + 2;
+            }
+            // 上移操作
+            shiftUp(index) {
+                if (index == 0) { return; } // 如果已经是根节点，就不用再上移了
+                const parentIndex = this.getParentIndex(index);
+                if (this.heap[parentIndex] > this.heap[index]) {
+                    this.swap(parentIndex, index);
+                    this.shiftUp(parentIndex)
+                }
+            }
+            // 下移操作
+            shiftDown(index) {
+                const leftIndex = this.getLeftIndex(index);
+                const rightIndex = this.getRightIndex(index);
+                if (this.heap[leftIndex] < this.heap[index]) {
+                    this.swap(leftIndex, index);
+                    this.shiftDown(leftIndex);
+                }
+                if (this.heap[rightIndex] < this.heap[index]) {
+                    this.swap(rightIndex, index);
+                    this.shiftDown(rightIndex);
+                }
+            }
+            // 插入
+            insert(value) {
+                this.heap.push(value);
+                this.shiftUp(this.heap.length - 1);
+            }
+            // 删除堆顶
+            pop() {
+                this.heap[0] = this.heap.pop();  // 删除最后一个元素并把值赋值给堆顶，就相当于堆顶和最后一个元素交换再删除它
+                this.shiftDown(0);
+            }
+            // 获取堆顶
+            peek() {
+                return this.heap[0];
+            }
+            // 获取堆的大小
+            size() {
+                return this.heap.length;
+            }
+        }
+
+        var findKthLargest = function(nums, k) {
+            const h = new MinHeap();
+            nums.forEach(n => {
+                h.insert(n);
+                if (h.size() > k) {
+                    h.pop();
+                }
+            });
+            return h.peek();
+        };
+    </script>
+</body>
+</html>

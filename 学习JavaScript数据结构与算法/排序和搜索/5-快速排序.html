@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        快速排序的思路：
+        - 分区：从数组中任意选择一个“基准”，所有比基准小的元素放在基准前面，比基准大的元素放在基准的后面
+        - 递归：递归地对基准前后的子数组进行分区
+
+        时间复杂度：
+        - 递归的时间复杂度是O(logN)
+        - 分区操作的时间复杂度是O(n)
+        - 时间复杂度O(n*logN)
+     -->
+</head>
+<body>
+    <script>
+        Array.prototype.quickSort = function() {
+            const rec = (arr) => {
+                if (arr.length === 1) { return arr; }
+                const left = []; // 存放基准左边数组元素(小于基准)
+                const right = []; // 存放基准右边数组元素(大于基准)
+                const mid = arr[0]; // 设当前数组第一个元素为基准
+                for (let i = 1; i < arr.length; i++) {
+                    if (arr[i] < mid) { // 把小于基准的推入left数组
+                        left.push(arr[i]);
+                    } else { // 大于等于基准的推入right数组
+                        right.push(arr[i]);
+                    }
+                }
+                return [...rec(left), mid, ...rec(right)]; // 排序好的数组
+            };
+            const res = rec(this);
+            res.forEach((n, i) => { this[i] = n }); // 将排序好的新数组复制给当前调用的数组
+        };
+
+        const arr = [2, 4, 5, 3, 1];
+        arr.quickSort();
+        console.log(arr);
+
+
+        // 学长代码
+        // function quickSort(arr) {
+        //     if(arr.length < 2) {
+        //         return arr;
+        //     } else {
+        //         const pivot = arr[0]; // 基准值
+        //         const pivotArr = []; // 一样大的放中间
+        //         const lowArr= []; // 小的放左边
+        //         const hightArr = []; // 大的放右边
+        //         arr.forEach(current => {
+        //         if(current === pivot) pivotArr.push(current);
+        //         else if(current > pivot) hightArr.push(current);
+        //         else lowArr.push(current);
+        //         })
+        //         return quickSort(lowArr).concat(pivotArr).concat(quickSort(hightArr));
+        //     }
+        // }
+    </script>
+</body>
+</html>

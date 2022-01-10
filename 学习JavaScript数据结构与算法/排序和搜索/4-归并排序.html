@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        归并排序时间复杂度 O(nlogn) 优于冒泡、选择、插入
+        归并排序思路：
+        - 分：把数组劈成两半，再递归地对子数组进行“分”操作，直到分成一个个单独的数。
+        - 合：把两个数合并为有序数组，再对有序数组进行合并，直到全部子数组合并为一个完整数组
+
+        合并两个有序数组：
+        - 新建一个空数组res，用于存放最终排序后的数组
+        - 比较两个数组的头部，较小者出队并推入res中
+        - 如果两个数组还有值，就重复第二步
+
+        时间复杂度：
+        - 分的时间复杂度是O(logN)
+        - 合的时间复杂度是O(n)
+        - 时间复杂度：O(n * logN)
+     -->
+</head>
+<body>
+    <script>
+        Array.prototype.mergeSort = function() {
+            const rec = (arr) => {
+                if (arr.length === 1) {return arr;} // 直到递归到数组中只有一个值，就返回它，只有一个值的数组一定是有序数组
+                const mid = Math.floor(arr.length / 2); // 找到中间坐标
+                const left = arr.slice(0, mid); // 分成左半边
+                const right = arr.slice(mid, arr.length); // 分成右半边
+                const orderLeft = rec(left); // 继续递归拆分成两边
+                const orderRight = rec(right); // 继续递归拆分成两边
+                const res = []; // 创建一个数组用来保存合并后的新的有序数组
+                while(orderLeft.length || orderRight.length) { // 当两个有序数组都有值时，使用while循环将它们合并到res数组中，按下面逻辑，合并后的数组也是有序数组(升序)
+                    if (orderLeft.length && orderRight.length) {
+                        res.push( (orderLeft[0] < orderRight[0]) ? orderLeft.shift() : orderRight.shift() ); // 依次shift()弹出两个数组第一个元素中较小的
+                    } else if (orderLeft.length) {
+                        res.push(orderLeft.shift());
+                    } else if (orderRight.length) {
+                        res.push(orderRight.shift());
+                    }
+                }
+                return res; // 返回这个合并的有序数组
+            }
+            const res = rec(this); // 最终的排序数组
+            res.forEach((n, i) => { this[i] = n; }); // 将最终的排序好的数组复制给原数组，改变原数组
+        };
+
+        const arr = [2, 4, 5, 3, 1];
+        arr.mergeSort();
+        console.log(arr);
+    </script>
+</body>
+</html>

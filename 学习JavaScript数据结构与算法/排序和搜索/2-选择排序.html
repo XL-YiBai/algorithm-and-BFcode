@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        选择排序思路：
+        - 找到数组中的最小值，选中它并将其放置在第一位
+        - 接着找到第二小的值，选中它并将其放置在第二位
+        - 依此类推，执行n-1轮
+
+        时间复杂度：O(n*n)
+     -->
+</head>
+<body>
+    <!-- 
+        先假设数组第一个没有排序的元素是最小值，然后遍历后续元素，如果比它小，就把那个元素更新为最小值，遍历结束后，使第一位和最小值交换位置，
+        第二轮循环从下标为1开始，先假设这位是最小值，继续遍历后续元素，碰到比它小的就更新最小值为那个元素，遍历结束后与下标为1的元素交换
+        第三轮从下标为2开始，以此类推
+     -->
+    <script>
+        Array.prototype.selectionSort = function() {
+            for (let i=0; i<this.length-1; i++) {
+                let indexMin = i;
+                for (let j = i; j < this.length; j++) {
+                    if (this[j] < this[indexMin]) {
+                        indexMin = j;
+                    }
+                }
+                if (indexMin !== i) { // 最小值下标不是最开始假设的那个元素，就交换它们
+                    const temp = this[i];
+                    this[i] = this[indexMin];
+                    this[indexMin] = temp;
+                }
+            }
+        };
+
+        const arr = [5, 4, 3, 2, 1];
+        arr.selectionSort();
+        console.log(arr);
+    </script>
+</body>
+</html>

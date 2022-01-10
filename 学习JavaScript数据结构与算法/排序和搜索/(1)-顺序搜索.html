@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        顺序搜索的思路：
+        - 遍历数组
+        - 找到跟目标值相等的元素，就返回它的下标
+        - 遍历结束后，如果没有搜索到目标值，就返回 -1
+
+        时间复杂度：
+        - 遍历数组是一个循环操作
+        - 时间复杂度：O(n)
+     -->
+</head>
+<body>
+    <script>
+        Array.prototype.sequentialSearch = function(item) {
+            for (let i=0; i<this.length; i++) {
+                if (this[i] === item) {
+                    return i;
+                }
+            }
+            reutrn -1;
+        };
+
+        const res = [1,2,3,4,5].sequentialSearch(3);
+        console.log(res); // 2
+    </script>
+</body>
+</html>

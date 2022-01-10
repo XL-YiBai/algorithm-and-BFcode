@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        visualgo.net/zh/sorting 使用这个网站查看排序的动画过程
+        冒泡排序的思路：
+        - 比较所有相邻元素，如果第一个比第二个大，则交换它们
+        - 一轮下来，可以保证最后一个数是最大的
+        - 执行 n-1 轮，就可以完成排序
+
+        时间复杂度： O(n*n)
+     -->
+</head>
+<body>
+    <script>
+        Array.prototype.bubbleSort = function() {
+            for (let i = 0; i < this.length-1; i++) { // 共执行length-1趟
+                for (let j = 0; j < this.length - 1 - i; j+=1) { // 每一趟都比较从0开始未排序的元素
+                    if (this[j] > this[j+1]) {
+                        const temp = this[j];
+                        this[j] = this[j+1];
+                        this[j+1] = temp;
+                    }
+                }
+            }
+        };
+
+        const arr = [5, 4, 3, 2, 1];
+        arr.bubbleSort();
+        console.log(arr);
+    </script>
+</body>
+</html>
