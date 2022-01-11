@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 先翻转左右子树，再将子树换个位置
+        - 符合“分、解、合”特性
+        - 考虑选择分而治之
+
+        解题步骤：
+        - 分：获取左右子树
+        - 解：递归地翻转左右子树
+        - 合：将翻转后的左右子树换个位置放到根节点上
+     -->
+</head>
+<body>
+    <script>
+        // 自己代码
+        var invertTree = function(root) {
+            const rec = (root) => {
+                if (!root) {return null;} // 如果二叉树为空
+                if (root.right && root.left) { // 左右子树都存在时，递归翻转左右子树
+                    rec(root.left);
+                    rec(root.right);
+                } else if (root.left && !root.right) { // 只有左子树存在，递归翻转左子树
+                    rec(root.left);
+                } else if (!root.left && root.right) { // 只有右子树存在，递归翻转右子树
+                    rec(root.right);
+                }
+                // 交换左右子树
+                let temp = root.left;
+                root.left = root.right;
+                root.right = temp;
+            };
+            rec(root);
+            return root;
+        };
+
+        // 老师代码
+        var invertTree = function(root) {
+            if (!root) { return null; }
+            return { 
+                val: root.val,
+                left: invertTree(root.right),
+                right: invertTree(root.left),
+            }
+        };
+    </script>
+</body>
+</html>

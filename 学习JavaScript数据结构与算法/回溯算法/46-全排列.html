@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 要求：1、所有排列情况; 2、没有重复元素
+        - 有出路、有死路
+        - 考虑使用回溯算法
+
+        解题步骤：
+        - 用递归模拟出所有情况
+        - 遇到包含重复元素的情况，就回溯
+        - 收集所有到达递归终点的情况，并返回
+
+        时间复杂度：O(n!)，n!=1x2x3x...x(n-1)xn
+        空间复杂度：O(n)
+     -->
+</head>
+<body>
+    <script>
+        var permute = function(nums) {
+            const res = []; // 用于保存结果
+            const backtrack = (path) => {
+                if (path.length === nums.length) { // 当path数组长度和传入数组长度相同时，这就是一个全排列结果，push进res中并return结束递归
+                    res.push(path);
+                    return;
+                }
+                nums.forEach(n => { // 遍历nums数组，把每一个值都连接到path数组中，如果之前已经存在这个值，就直接return掉，继续遍历后面的值
+                    if (path.includes(n)) {return;}
+                    backtrack(path.concat(n));
+                })
+            };
+            backtrack([]); // 调用递归函数时传入一个空数组用于保存全排列结果
+            return res;
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 要求：1、所有子集；2、没有重复元素
+        - 有出路、有死路
+        - 考虑使用回溯算法
+
+        解题步骤：
+        - 用递归模拟出所有情况
+        - 保证接的数字都是后面的数字
+        - 收集所有到达递归终点的情况，并返回
+     -->
+</head>
+<body>
+    <script>
+        // 自己代码
+        var subsets = function(nums) {
+            const res = []; // 保存结果
+            // 因为在forEach中，如果数组已经达到nums的长度，最终会在if中逐一return掉退出递归，所以这里没有再设置递归出口判断
+            const func = (arr) => {
+                if(!res.includes(arr)) { // 如果结果数组中不存在arr子集，就添加进去
+                    res.push(arr);
+                }
+                nums.forEach(n => {
+                    // 如果子集arr中已经有数字n，或者当前数字比arr最后一个数小(按序添加数组元素是为了保证子集唯一，避免存在[1,2]和[2,1]这种)，就return掉，
+                    if (arr.includes(n) || n<arr[arr.length-1]) {return;}
+                    func(arr.concat(n));
+                })
+            };
+            func([]);
+            return res;
+        };
+        
+        // 老师代码
+        var subsets = function(nums) {
+            const res = [];
+            const backtrack = (path, l, start) => { 
+                if (path.length === l) {
+                    res.push(path);
+                    return;
+                }
+                for (let i=start; i<nums.length; i++) {
+                    backtrack(path.concat(nums[i]), l, i+1);
+                }
+            }
+            for (let i=0; i<=nums.length; i++) {
+                backtrack([], i, 0);
+            }
+            return res;
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 两个树：根节点的值相同，左子树相同，右子树相同
+        - 符合：“分、解、合”特性
+        - 考虑选择分而治之
+
+        解题步骤：
+        - 分：获取两个树的左子树和右子树
+        - 解：递归地判断两个树的左子树是否相同，右子树是否相同
+        - 合：将上述结果合并，如果根节点的值也相同，树就相同
+     -->
+</head>
+<body>
+    <script>
+        var isSameTree = function(p, q) {
+            if (!p && !q) {return true;} // 两个节点都为空，则它们是相同的
+            // 如果两个节点存在，并且它们值相同，且左右子树都相同，则这两颗树相同
+            if (p && q && p.val === q.val && 
+            isSameTree(p.left, q.left) &&
+            isSameTree(p.right, q.right)
+            ) {
+                return true;
+            }
+            return false;
+        };
+    </script>
+</body>
+</html>

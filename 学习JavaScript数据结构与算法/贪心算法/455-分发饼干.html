@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 局部最优：既能满足孩子，还能消耗最少
+        - 先将“较小的饼干”分给“胃口最小”的孩子
+        
+        解题步骤：
+        - 对饼干数组和胃口数组升序排序
+        - 遍历饼干数组，找到能满足第一个孩子的饼干
+        - 然后继续遍历饼干数组，找到能满足第二、三、...、n个孩子的饼干
+     -->
+</head>
+<body>
+    <script>
+        var findContentChildren = function(g, s) {
+            const sortFunc = function(a, b) {
+                return a - b;
+            }
+            // 将饼干数组和胃口数组升序排序
+            g.sort(sortFunc);
+            s.sort(sortFunc);
+            let i = 0; // 记录第几个孩子，也是能满足的孩子个数
+            s.forEach(n => { // 遍历饼干数组，找到能满足当前孩子的饼干，找到之后就i++换成下一个孩子继续判断
+                if (n>=g[i]) {
+                    i++;
+                }
+            });
+            return i;
+        };
+    </script>
+</body>
+</html>

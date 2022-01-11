@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 转化为：左右子树是否镜像
+        - 分解为：树1的左子树和树2的右子树是否镜像，树1的右子树和树2的左子树是否镜像
+        - 符合“分、解、合”特性，考虑选择分而治之
+
+        解题步骤：
+        - 分：获取两个树的左子树和右子树
+        - 解：递归地判断树1地左子树和树2地右子树是否镜像，树1地右子树和树2地左子树是否镜像
+        - 合：如果上述都成立，且根节点值也相同，两个树就镜像 
+     -->
+</head>
+<body>
+    <script>
+        var isSymmetric = function(root) {
+            if (!root) {return true}; // 如果传过来一个空树，肯定是对称的
+            const isMirror = (l, r) => { // 判断左右子树是否是镜像的
+                if (!l && !r) {return true}; // 如果左右子树为空，则是镜像的
+                // 如果左右子树存在，且根节点值相同，左子树的左子树和右子树镜像，左子树的右子树和右子树左子树镜像，则是镜像的
+                if(l && r && l.val === r.val && 
+                    isMirror(l.left, r.right) &&
+                    isMirror(l.right, r.left)
+                ) {
+                    return true;
+                }
+                return false; // 否则不是镜像的
+            }
+            return isMirror(root.left, root.right);
+        };
+    </script>
+</body>
+</html>

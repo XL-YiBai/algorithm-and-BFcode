@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 爬到第 n 阶可以在第 n-1 阶爬 1 个台阶，或者在第 n-2 阶爬 2 个台阶
+        - F(n) = F(n-1) + F(n-2) (爬到第n阶的方法实际上等于爬到n-1阶的方法数，加上爬到n-2阶的方法数，也就是可以选择爬到n-1再爬一级，或者爬到n-2再爬两级)
+        - 使用动态规划
+
+        - 定义子问题：F(n) = F(n-1) + F(n-2)
+        - 反复执行：从2循环到n，执行上述公式
+     -->
+</head>
+<body>
+    <script>
+        var climbStairs = function(n) {
+            if (n < 2) {return 1;}
+            const dp = [1, 1]; // dp[i]是爬到i层台阶的方法数
+            for (let i=2; i<=n; i++) {
+                dp[i] = dp[i-1] + dp[i-2];
+            }
+            return dp[n];
+        };
+
+        // 优化空间复杂度
+        var climbStairs = function(n) {
+            if (n < 2) {return 1;}
+            let dp0 = 1;
+            let dp1 = 1;
+            for (let i=2; i<=n; i++) { // 分别用dp0和dp1代表倒数两个数
+                const temp = dp0;
+                dp0 = dp1;
+                dp1 = dp1 + temp;
+            }
+            return dp1;
+        };
+    </script>
+</body>
+</html>

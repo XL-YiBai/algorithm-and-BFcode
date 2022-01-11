@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题思路：
+        - 前提：上帝视角，知道未来的价格
+        - 局部最优：见好就收，见差就不动，不做任何长远打算。
+
+        - 新建一个变量，用来统计总利润。
+        - 遍历价格数组，如果当前价格比昨天高，就在昨天买，今天卖，否则就不交易
+        - 遍历结束后，返回所有利润之和
+     -->
+</head>
+<body>
+    <script>
+        var maxProfit = function(prices) {
+            let sum = 0; // 总利润
+            for (let i=1; i<prices.length; i++) { // 如果今天的价格比昨天高，就在昨天买入，赚取今天和昨天的差价，否则不买入
+                if (prices[i] > prices[i-1]) {
+                    sum += (prices[i] - prices[i-1]);
+                }
+            }
+            return sum;
+        };
+    </script>
+</body>
+</html>

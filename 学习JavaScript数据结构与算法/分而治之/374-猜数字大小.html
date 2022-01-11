@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        解题步骤：
+        - 二分搜索，同样具备“分、解、合”的特性
+        - 考虑选择分而治之
+
+        解题步骤：
+        - 分：计算中间元素，分割数组
+        - 解：递归地在较大或者较小子数组进行二分搜索
+        - 合：不需要此步，因为在子数组中搜到就返回了
+
+        时间复杂度：O(logN) 
+        空间复杂度：O(logN)
+     -->
+</head>
+<body>
+    <script>
+        var guessNumber = function(n) {
+            const rec = (low, high) => {
+                if (low > high) {return;}
+                const mid = Math.floor((low + high) / 2);
+                const res = guess(mid);
+                if (res === 0) {
+                    return mid;
+                } else if (res === 1) {
+                    return rec(mid + 1, high);
+                } else {
+                    return rec(1, mid - 1);
+                }
+            };
+            return rec(1, n);
+        };
+    </script>
+</body>
+</html>
