@@ -40,12 +40,14 @@
         // 老师代码
         var subsets = function(nums) {
             const res = [];
+            // path为数组，l为数组长度，在后面那个for循环中保证最终数组长度依次为0，1，...，nums.length，
+            // 而start保证每次插入的新元素都是当前数字后面的元素，也是避免出现[1,2]、[2,1]的情况
             const backtrack = (path, l, start) => { 
-                if (path.length === l) {
+                if (path.length === l) { // 当数组长度已经到达传入长度，就push进res中并return停止递归
                     res.push(path);
                     return;
                 }
-                for (let i=start; i<nums.length; i++) {
+                for (let i=start; i<nums.length; i++) { // 依次添加新元素到数组中继续递归
                     backtrack(path.concat(nums[i]), l, i+1);
                 }
             }
