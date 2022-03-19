@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var combinationSum = function(candidates, target) {
+      const ans = [];
+      // target为还剩余需要的数，combine为当前已经组合的数字列表，idx为当前遍历的下标
+      const dfs = (target, combine, idx) => {
+          //如果下标已经超出给定数组，return
+          if (idx == candidates.length) {
+              return;
+          }
+          // 如果target为0，说明当前组合的数字和已经满足题目条件，推入ans中，return
+          if (target == 0) {
+              ans.push(combine);
+              return;
+          }
+          // 如果当前target减去当前idx指向的数字，大于等于0继续遍历取当前数字
+          if(target-candidates[idx] >= 0) {
+              dfs(target-candidates[idx], [...combine, candidates[idx]], idx);
+          }
+          // 上述情况发生回溯之后，取下一个下标继续遍历
+          dfs(target, combine, idx+1);
+      }
+      dfs(target, [], 0);
+      return ans;
+  };
+  </script>
+</body>
+</html>
