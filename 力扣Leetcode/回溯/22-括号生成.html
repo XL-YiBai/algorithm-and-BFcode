@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // dfs+回溯
+    var generateParenthesis = function(n) {
+        let ans = [];
+        // L为左括号剩余数量，R为右括号剩余数量，str为当前字符串
+        const dfs = (L, R, str) => {
+            // 如果字符串长度已经等于总括号数量，说明已经组合完成
+            if (str.length === 2*n) {
+                ans.push(str);
+                return;
+            }
+            // 如果左括号还有剩余，可以直接加入左括号
+            if (L > 0) {
+                dfs(L-1, R, str+'(');
+            }
+            // 只有右括号剩余数量多余左括号，才可以把右括号加入，反之不能
+            if (R > L) {
+                dfs(L, R-1, str+')');
+            }
+        }
+        // 总共有n对括号，所以初始左右括号剩余数量都为n
+        dfs(n, n, ''); 
+        return ans;
+    };
+
+  </script>
+</body>
+</html>
