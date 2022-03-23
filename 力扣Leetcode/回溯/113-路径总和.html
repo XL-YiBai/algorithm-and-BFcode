@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var pathSum = function(root, targetSum) {
+        let ans = [];
+        // 保存当前已经遍历路径
+        let path = [];
+        // root当前节点，tag当前已经遍历数的和，
+        const dfs = (root, tag) => {
+          if (!root) return;
+          tag = tag+root.val; // 更新遍历数总和
+          path.push(root.val); // 把当前遍历的值推入路径数组path
+          // 如果当前节点没有子节点，说明已经是叶子节点，且如果已经遍历值总和等于给定总和满足条件，推入ans中
+          if (!root.left && !root.right && tag === targetSum) {
+              ans.push([...path]);
+          }
+          // 分别遍历左右子树
+          dfs(root.left, tag);
+          dfs(root.right, tag);
+          // 在回溯之前，把数组中当前值pop出来，撤销本次选择的值。
+          path.pop();
+        }
+        dfs(root, 0, []);
+        return ans;
+    };
+  </script>
+</body>
+</html>
