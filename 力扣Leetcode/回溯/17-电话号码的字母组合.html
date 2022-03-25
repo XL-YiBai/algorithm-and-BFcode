@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 1. 自己第一次做的思路
+    var letterCombinations = function(digits) {
+        let ans = [];
+        // 先用map把数字和对应字母的映射存储起来
+        const map = new Map();
+        map.set(2, 'abc');
+        map.set(3, 'def');
+        map.set(4, 'ghi');
+        map.set(5, 'jkl');
+        map.set(6, 'mno');
+        map.set(7, 'pqrs');
+        map.set(8, 'tuv');
+        map.set(9, 'wxyz');
+        // 使用digarr保存所给的数字
+        let digarr = digits.split('');
+        digarr = digarr.map(value => {
+            return Number(value);
+        })
+        // S为当前组合的字符串，idx为当前遍历的数字下标
+        const dfs = (S, idx) => {
+            // 如果idx越界，return
+            if (idx>=digarr.length) return;
+            let value = digarr[idx]; // 取出当前遍历数字
+            let str = map.get(value); // 获得当前数字对应的字母串
+            // 遍历该数字的字符串
+            for (let i=0; i<str.length; i++) {
+                // 把当前遍历的字符添加到之前的组合串S中
+                let temp = S+str[i];
+                // 如果此时长度已经为给定数字的个数，说明组合完成，推入ans中
+                if (temp.length === digits.length) {
+                    ans.push(temp);
+                }
+                // 遍历下一个字母串继续依次添加字母
+                dfs(temp, idx+1);
+            }
+            
+        }
+        dfs('', 0);
+        return ans;
+    };
+
+    // 2. 题解区思路
+    // const letterCombinations = (digits) => {
+    //   if (digits.length == 0) return [];
+    //   const res = [];
+    //   const map = { '2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz' };
+    //   // dfs: 当前构建的字符串为curStr，现在“翻译”到第i个数字，基于此继续“翻译”
+    //   const dfs = (curStr, i) => {   // curStr是当前字符串，i是扫描的指针
+    //     if (i > digits.length - 1) { // 指针越界，递归的出口
+    //       res.push(curStr);          // 将解推入res
+    //       return;                    // 结束当前递归分支
+    //     }
+    //     const letters = map[digits[i]]; // 当前数字对应的字母
+    //     for (const letter of letters) { // 一个字母是一个选择，对应一个递归分支
+    //       dfs(curStr + letter, i + 1);  // 选择翻译成letter，生成新字符串，i指针右移继续翻译（递归）
+    //     }
+    //   };
+    //   dfs('', 0); // 递归的入口，初始字符串为''，从下标0开始翻译
+    //   return res;
+    // };
+
+
+  </script>
+</body>
+</html>
