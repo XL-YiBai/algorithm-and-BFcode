@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var maxSubArray = function(nums) {
+        // ans初始化为第一个数
+        let ans = nums[0];
+        // sum存储前面已遍历子数组中的最大和
+        let sum = 0;
+        nums.forEach(value => {
+            // 如果此时sum大于0，就加上当前值
+            if (sum > 0) {
+                sum += value;
+            } else { // 如果此时sum<0，不管在哪个子序列中，带来的都是负增益，都是让和变小，所以直接丢弃掉前面的负值sum。
+                sum = value;
+            }
+            // 每次都重新取一下sum和ans的最大值
+            ans = Math.max(sum, ans);
+        })
+        return ans;
+    };
+  </script>
+</body>
+</html>
