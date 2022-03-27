@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var canJump = function(nums) {
+        // 如果数组只有一位，直接就是最后一个了
+        if (nums.length === 1) return true;
+        // cover记录当前最远可以到达的下标
+        let cover = 0;
+        // 没到达当前最远下标就继续遍历
+        for (let i=0; i<=cover; i++) {
+            // 如果i+nums[i]大于当前最远到达下标，就更新cover
+            cover = Math.max(cover, i+nums[i]);
+            // 如果cover大于等于数组最后一位下标，说明可以到达最后一位，返回true
+            if (cover >= nums.length-1) return true;
+        }
+        // 已经遍历到可以到达最远下标都没有返回true，说明不能到达最后一位，直接返回false
+        return false;
+    };
+  </script>
+</body>
+</html>
