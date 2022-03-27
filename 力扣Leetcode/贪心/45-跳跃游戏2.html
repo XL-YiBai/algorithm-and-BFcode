@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 选取一次下标和最远到达位置后，就从选取下标一直循环到最远位置，更新循环中可到达最远位置和下标，
+    // 然后依次循环，直到最远位置到达数组末尾，选取下标的个数就是最少跳跃次数
+    
+    var jump = function(nums) {
+        // 保存当前最远可到达位置
+        let cover = 0;
+        // 保存每次选取可到达最远位置的下标
+        let idx = 0;
+        // arr存取每次选取的下标
+        let arr = [];
+        // 只要还不能到达数组最后，就循环
+        while (cover < nums.length-1) {
+            // 保存上一次循环可以到达的最远位置用于下面循环更改，
+            // 不能直接更改原来的cover，不然for循环会一直到最后
+            let c = cover;
+            // 每次从当前选取下标到目前最远位置循环，找到该区间可以跳到的最远位置
+            for (let i=idx; i<=cover; i++) {
+                // 如果循环的位置可以跳的更远，就更新下标和当前可到达最远位置
+                if (nums[i]+i > c) {
+                    idx = i;
+                    c = nums[i]+i;
+                }
+            }
+            // 将本次循环选取的下标推入arr，更新最远到达位置
+            arr.push(idx);
+            cover = nums[idx] + idx;
+        }
+        // 跳出while之后说明cover已经可以到达数组末尾，arr数组中存取的下标就是最少跳跃次数
+        return arr.length;
+    };
+  </script>
+</body>
+</html>
