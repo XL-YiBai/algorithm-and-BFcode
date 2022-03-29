@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 思路：偶数个字母可以直接左右对称组成回文串，最后还有单个的字母可以放到正中间，奇数减去一个就是偶数个字母
+    var longestPalindrome = function(s) {
+        let map = new Map();
+        let res = 0;
+        // k 指定是否有单个多出的字母，因为等偶数插完之后，最终还可以放一个单个字母到正中间
+        let k = 0;
+        // map保存字母对应的个数
+        for (let i=0; i<s.length; i++) {
+            map.set(s[i], (map.get(s[i]) || 0) + 1 );
+        }
+        // 如果只有一种字母，那最长回文串就是字母长度
+        if (map.size === 1) {
+            return s.length;
+        }
+
+        map.forEach(v => {
+            // 如果是偶数个字母，直接可以直接左右各放一半变成回文串，全部可以加入
+            if (v%2 == 0) {
+                res = res + v;
+            }else { // 如果是奇数个，减去一个就是偶数，左右个一半插入，并设置k为1
+                res = res + v - 1;
+                k = 1;
+            }
+        })
+        // 返回偶数个字母组成回文串，加上一个k，如果有单个字母留出，k为1，如果没有，则k为0
+        return res + k;
+    };
+  </script>
+</body>
+</html>
