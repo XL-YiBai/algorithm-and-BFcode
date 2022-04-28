@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+      接雨水双指针法(除此还有动态规划法，单调栈法)：
+      求每一列的雨水高度，遍历每一列，
+      然后根据这一列，找出左右最高的柱子，
+      那么这一列的雨水高度，就是两个柱子中较矮的那个，减去当前柱子的高度
+    */
+    var trap = function(height) {
+        const len = height.length;
+        let sum = 0;
+        for(let i = 0; i < len; i++){
+            // 第一个柱子和最后一个柱子不接雨水
+            if(i == 0 || i == len - 1) continue;
+            let rHeight = height[i]; // 记录右边柱子的最高高度
+            let lHeight = height[i]; // 记录左边柱子的最高高度
+            for(let r = i + 1; r < len; r++){
+                if(height[r] > rHeight) rHeight = height[r];
+            }
+            for(let l = i - 1; l >= 0; l--){
+                if(height[l] > lHeight) lHeight = height[l];
+            }
+            let h = Math.min(lHeight, rHeight) - height[i];
+            if(h > 0) sum += h;
+        }
+        return sum;
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+    接雨水动态规划法(还有双指针和单调栈法)：
+    由于双指针法是遍历每一列时，用双指针找到两侧最大高度的柱子
+    这里可以用maxLeft数组和maxRight数组存取每一列的左右侧最大高度柱子高度，
+    第k列的左侧最大柱子高度，等于k-1列的左侧最大柱子高度 和 k-1列自身高度取最大值，即从左向右遍历：maxLeft[i] = max(height[i-1], maxLeft[i - 1]);
+    同理第k列右侧最大柱子高度，等于k+1列的右侧最大柱子高度 和 k+1列自身高度取最大值。从右向左遍历：maxRight[i] = max(height[i+1], maxRight[i + 1]);
+    于是就找到了递推关系。
+    */
+    var trap = function(height) {
+        const len = height.length;
+        if (len <= 2) return 0;
+        // 保存每个位置的左侧最高柱子，先创建一个len长度数组，用0填充
+        const maxLeft = new Array(len).fill(0);
+        // 每一列右侧最高柱子
+        const maxRight = new Array(len).fill(0);
+        maxLeft[0] = height[0];
+        // 记录每一列柱子的左侧最高柱子高度，为它前面那个柱子(i-1)左侧最高柱子高度，和前面柱子(i-1)的高度最大值
+        for (let i=1; i<len; i++) {
+            maxLeft[i] = Math.max(maxLeft[i-1], height[i-1]);
+        }
+        maxRight[len-1] = height[len-1];
+        for (let i=len-2; i>=0; i--) {
+            maxRight[i] = Math.max(maxRight[i+1], height[i+1]);
+        }
+        // 求和
+        let res = 0;
+        for(let i=0; i<len; i++) {
+            let count = Math.min(maxLeft[i], maxRight[i]) - height[i];
+            if (count > 0) res += count;
+        }
+        return res;
+    };
+  </script>
+</body>
+</html>
