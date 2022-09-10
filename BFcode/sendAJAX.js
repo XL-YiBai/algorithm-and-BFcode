@@ -1,3 +1,10 @@
+/**
+ * 使用Promise封装一个函数，发送AJAX请求
+ * 封装一个函数 sendAJAX 发送 GET AJAX 请求
+ * 参数 URL
+ * 返回结果 Promise 对象
+ */
+
 function sendAJAX(url) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
