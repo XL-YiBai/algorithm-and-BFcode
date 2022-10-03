@@ -21,7 +21,7 @@ var canPartition = function (nums) {
   const dp = new Array(sum / 2 + 1).fill(0);
   // 遍历所有的nums
   for (let i = 0; i < nums.length; i++) {
-    // 遍历背包大小，从大遍历到当前数字的大小
+    // 遍历背包大小，从大遍历到当前数字的大小，因为数字大小在这里就是重量，背包空间小于这个重量就不能放了
     for (let j = sum / 2; j >= nums[i]; j--) {
       dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
       // 如果有背包的数字和正好是所有和的一半，说明满足题意可以均分
