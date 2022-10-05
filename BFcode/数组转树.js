@@ -47,8 +47,8 @@ const arr = [
 
 // 函数
 const arrToTree = (arr) => {
-  const idToNode = new Map(); // 用一个map保存id到treeNode节点的映射
-  let head; // 保存树的顶部节点
+  const idToTreeNode = new Map(); // 用一个map保存id到treeNode节点的映射
+  let root; // 保存树的根节点
   // 遍历数组所有项
   arr.map((obj) => {
     // 生成一个树节点
@@ -60,22 +60,22 @@ const arrToTree = (arr) => {
     };
     // 如果该节点parentId为0，说明没有父节点，那么就是顶部节点
     if (obj.parentId == 0) {
-      head = treeNode;
+      root = treeNode;
     }
     // 保存该节点id到该节点的映射
-    idToNode.set(treeNode.id, treeNode);
+    idToTreeNode.set(treeNode.id, treeNode);
   });
 
   // 遍历所有树节点
-  idToNode.forEach((treeNode) => {
-    if (idToNode.has(treeNode.parentId)) {
+  idToTreeNode.forEach((treeNode) => {
+    if (idToTreeNode.has(treeNode.parentId)) {
       // 拿到其父节点，插入到children数组中
-      idToNode.get(treeNode.parentId).children.push(treeNode);
+      idToTreeNode.get(treeNode.parentId).children.push(treeNode);
     }
   });
 
-  // 返回顶部节点，即返回该树
-  return head;
+  // 返回根节点，即返回该树
+  return root;
 };
 
 console.log(arrToTree(arr));
