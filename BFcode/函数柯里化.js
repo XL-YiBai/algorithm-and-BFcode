@@ -26,3 +26,22 @@ function add(a, b, c) {
 const curryAdd = curry(add)
 const res = curryAdd(10)(20)(30) // 60
 console.log(res)
+
+// 2. 完善版，上面不支持下面的测试用例
+function curry2(fn) {
+  // your code here
+  return function exec(...args) {
+    if (args.length >= fn.length) {
+      return fn.apply(this, args)
+    } else {
+      return (...newArgs) => exec(...args, ...newArgs)
+    }
+  }
+}
+
+const join = (a, b, c) => {
+  return `${a}_${b}_${c}`
+}
+const curriedJoin = curry(join)(1, 2)
+console.log(curriedJoin(3)) // 1_2_3
+console.log(curriedJoin(4)) // 1_2_4
