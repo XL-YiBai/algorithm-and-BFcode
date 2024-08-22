@@ -41,3 +41,20 @@ function flattenDep(arr) {
 const arr = [1, [2, [3, ['a', 'b'], 4], 5], 6]
 console.log(flatten(arr))
 console.log(flattenDep(arr))
+
+// 指定拍平层级
+function flat(arr, depth = 1) {
+  const res = []
+  arr.forEach((item) => {
+    if (Array.isArray(item) && depth > 0) {
+      res.push(...flat(item, depth - 1))
+    } else {
+      res.push(item)
+    }
+  })
+  return res
+}
+const arr2 = [1, [2], [3, [4]]]
+console.log(flat(arr2)) // [1,2,3,[4]]
+console.log(flat(arr2, 1)) // [1,2,3,[4]]
+console.log(flat(arr2, 2)) //[1,2,3,4]
