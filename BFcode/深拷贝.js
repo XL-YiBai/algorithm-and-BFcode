@@ -6,19 +6,19 @@
 
 const _sampleDeepClone = (target) => {
   // 补全代码
-  if (typeof target != "object" || typeof target == null) {
-    return target;
+  if (typeof target != 'object' || typeof target == null) {
+    return target
   }
 
-  let obj = Array.isArray(target) ? [] : {};
+  let obj = Array.isArray(target) ? [] : {}
   for (let k in target) {
     // 排除原型上的属性，只拷贝对象自身的
     if (target.hasOwnProperty(k)) {
-      obj[k] = _sampleDeepClone(target[k]);
+      obj[k] = _sampleDeepClone(target[k])
     }
   }
-  return obj;
-};
+  return obj
+}
 
 /**
  * 复杂深拷贝：
@@ -27,36 +27,38 @@ const _sampleDeepClone = (target) => {
  */
 
 const _completeDeepClone = (target, map = new WeakMap()) => {
-  // 补全代码
-  if (typeof target != "object" || target == null) return target;
-  if (map.has(target)) return; // 如果已经拷贝过，return，避免循环引用
+  if (typeof target !== 'object' || target === null) return target
 
-  let obj = {};
-  map.set(target, obj); // 添加target到map中
+  if (map.has(target)) return map.get(target) // 如果已经拷贝过，返回已拷贝的引用，避免循环引用
+
+  let obj
 
   if (target instanceof Date) {
-    obj = new Date(target);
+    obj = new Date(target)
   } else if (target instanceof RegExp) {
-    obj = new RegExp(target);
+    obj = new RegExp(target)
   } else if (target instanceof Set) {
-    obj = new Set();
+    obj = new Set()
+    map.set(target, obj) // 在递归之前存储
     target.forEach((v) => {
-      obj.add(_completeDeepClone(v, map));
-    });
+      obj.add(_completeDeepClone(v, map))
+    })
   } else if (target instanceof Map) {
-    obj = new Map();
-    // map的key和value都可能是引用类型，都需要深拷贝
+    obj = new Map()
+    map.set(target, obj) // 在递归之前存储
     target.forEach((v, k) => {
-      obj.set(_completeDeepClone(k, map), _completeDeepClone(v, map));
-    });
+      obj.set(_completeDeepClone(k, map), _completeDeepClone(v, map))
+    })
   } else {
-    obj = Array.isArray(target) ? [] : {};
+    obj = Array.isArray(target) ? [] : {}
+    map.set(target, obj) // 在递归之前存储
     for (let k in target) {
-      // 只拷贝对象上的属性，不拷贝原型上的
-      if (obj.hasOwnProperty(k)) {
-        obj[k] = _completeDeepClone(target[k], map);
+      if (target.hasOwnProperty(k)) {
+        obj[k] = _completeDeepClone(target[k], map)
       }
     }
   }
-  return obj;
-};
+
+  map.set(target, obj) // 在所有处理完成后，更新 map 中的存储
+  return obj
+}
