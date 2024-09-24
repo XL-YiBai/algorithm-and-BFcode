@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 
+        实现一二三点骰子样式，dom 部分不能修改，只能在 style 中编写类名
+      */
+      .container {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border: 1px solid black;
+      }
+
+      .item {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: pink;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="item"></div>
+    </div>
+    <div class="container">
+      <div class="item"></div>
+      <div class="item"></div>
+    </div>
+    <div class="container">
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+    </div>
+  </body>
+</html>
